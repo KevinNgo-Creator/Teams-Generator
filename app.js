@@ -166,7 +166,6 @@ function generateHTML() {
                 </div>
                 </div>`
     }
-
     HTML += `</div></body></html>`
     return HTML;
 }
