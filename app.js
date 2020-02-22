@@ -9,6 +9,7 @@ const Intern = require('./asset/Intern');
 
 let employeeArray = []
 
+
 let questions = [
     {
         message: "What is your employee's name?",
@@ -75,25 +76,13 @@ function addEmployee() {
             }
         )
         .then(function (data) {
-            let q = [];
-
-            switch (data.employee) {
-                case 'No':
-                    console.log(employeeArray)
-                    let HTML = generateHTML();
-                    writeFileAsync("./output/profile.html", HTML)
-                    return null;
-                case 'Engineer':
-                    q = engineerQuestion;
-                    break;
-                case 'Intern':
-                    q = internQuestion;
-                    break;
-            }
-
+          if (data.employee === 'No') {
+            writeFileAsync("./output/profile.html", generateHTML())
+            return
+          }
 
             inquirer
-                .prompt(questions.concat(q))
+                .prompt(questions.concat(roleQuestions[data.employee]))
                 .then(function (data2) {
                     switch (data.employee) {
                         case 'Engineer':
@@ -105,7 +94,7 @@ function addEmployee() {
                     }
 
                     addEmployee();
-                })
+})
 
         })
 }
@@ -117,13 +106,12 @@ function generateHTML() {
         <title></title>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <meta http-equiv='X-UA-Compatible' content='ie=edge'>
-    
+        <meta http-equiv='X-UA-Compatible' content='ie=edge'>    
         <script src="https://code.jquery.com/jquery-3.4.1.js"</script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"</script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"</script>
-    
+
         <style>
             header {
                 position: relative;
@@ -132,6 +120,7 @@ function generateHTML() {
                 width: 100%;
                 height: 100px;
             }
+
             header h1 {
                 position: relative;
                 left: 40%
@@ -142,7 +131,7 @@ function generateHTML() {
             }
         </style>
     </head>
-    
+
     <body>
         <header>
             <h1>My Team</h1>
@@ -166,6 +155,7 @@ function generateHTML() {
                 </div>
                 </div>`
     }
+
     HTML += `</div></body></html>`
     return HTML;
 }
