@@ -29,14 +29,14 @@ let questions = [
 let engineerQuestion = [
     {
         message: 'What is their GitHub user name?',
-        name: "roleVar"
+        name: "gihub"
     }
 ]
 
 let internQuestion = [
     {
         message: 'What school are they going to?',
-        name: "roleVar"
+        name: "school"
     }
 ]
 
@@ -56,7 +56,7 @@ inquirer
         },
         {
             message: 'What is their office number?',
-            name: "roleVar"
+            name: "office"
         }
     ])
     .then(function (data) {
