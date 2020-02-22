@@ -22,20 +22,19 @@ let questions = [
     },
 ]
 
-const roleQuestions = {
-  'Engineer': [
-      {
-          message: 'What is their GitHub user name?',
-          name: "roleVar"
-      }
-  ],
-  'Intern': [
-      {
-          message: 'What school are they going to?',
-          name: "roleVar"
-      }
-  ]
-}
+let engineerQuestion = [
+    {
+        message: 'What is their GitHub user name?',
+        name: "gihub"
+    }
+]
+
+let internQuestion = [
+    {
+        message: 'What school are they going to?',
+        name: "school"
+    }
+]
 
 inquirer
     .prompt([
@@ -53,7 +52,7 @@ inquirer
         },
         {
             message: 'What is their office number?',
-            name: "roleVar"
+            name: "office"
         }
     ])
     .then(function (data) {
