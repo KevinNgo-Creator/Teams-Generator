@@ -1,13 +1,11 @@
 const inquirer = require('inquirer');
-
 const fs = require("fs");
 const util = require("util");
-
 const writeFileAsync = util.promisify(fs.writeFile);
 
-const Manager = require('./asset/lib/Manager');
-const Engineer = require('./asset/lib/Engineer');
-const Intern = require('./asset/lib/Intern');
+const Manager = require('./asset/Manager');
+const Engineer = require('./asset/Engineer');
+const Intern = require('./asset/Intern');
 
 let employeeArray = []
 
@@ -29,14 +27,14 @@ let questions = [
 let engineerQuestion = [
     {
         message: 'What is their GitHub user name?',
-        name: "gihub"
+        name: "role"
     }
 ]
 
 let internQuestion = [
     {
         message: 'What school are they going to?',
-        name: "school"
+        name: "role"
     }
 ]
 
@@ -56,11 +54,11 @@ inquirer
         },
         {
             message: 'What is their office number?',
-            name: "office"
+            name: "role"
         }
     ])
     .then(function (data) {
-        employeeArray.push(new Manager(data.name, data.id, data.email, data.roleVar));
+        employeeArray.push(new Manager(data.name, data.id, data.email, data.role));
 
 
         addEmployee();
@@ -99,10 +97,10 @@ function addEmployee() {
                 .then(function (data2) {
                     switch (data.employee) {
                         case 'Engineer':
-                            employeeArray.push(new Engineer(data2.name, data2.id, data2.email, data2.roleVar));
+                            employeeArray.push(new Engineer(data2.name, data2.id, data2.email, data2.role));
                             break;
                         case 'Intern':
-                            employeeArray.push(new Intern(data2.name, data2.id, data2.email, data2.roleVar));
+                            employeeArray.push(new Intern(data2.name, data2.id, data2.email, data2.role));
                             break;
                     }
 
@@ -121,18 +119,10 @@ function generateHTML() {
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <meta http-equiv='X-UA-Compatible' content='ie=edge'>
     
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-            crossorigin="anonymous"></script>
-       
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"</script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"</script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"</script>
     
         <style>
             header {
@@ -142,12 +132,10 @@ function generateHTML() {
                 width: 100%;
                 height: 100px;
             }
-    
             header h1 {
                 position: relative;
                 left: 40%
             }
-    
             .card-header {
                 background-color: blue;
                 color: white;
@@ -164,19 +152,19 @@ function generateHTML() {
     for (let i = 0; i < employeeArray.length; i++) {
         HTML += `<div class="card col-md-2" style="width: 18rem;">
             <div class="card-header">
-                <h5 class="card-title"><span id="name">${employeeArray[i].name}</span> 
+                <h2 class="card-title"><span id="name">${employeeArray[i].name}</span> 
                 <br> 
                 ${employeeArray[i].getRole()}
-                </h5>
-            </div>
+                    </h2>
+                </div>
             <div class="card-body">
                 <p class="card-text">
                     <div>ID: <span id="ID">${employeeArray[i].id}</span></div>
                         <div>Email: <span id="email">${employeeArray[i].email}</span></div>
-                    <div>${employeeArray[i].role}: <span id="role">${employeeArray[i].getRoleVar()}</span></div>
-                </p>
-            </div>
-        </div>`
+                            <div>${employeeArray[i].role}: <span id="role">${employeeArray[i].getRoleEmp()}</span></div>
+                    </p>
+                </div>
+                </div>`
     }
 
     HTML += `</div></body></html>`
